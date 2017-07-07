@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<!--<link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>-->
+		<style type="text/css">
+			tfoot{
+				display: none;
+			}
+			.prev,.next{
+				cursor: pointer;
+			}
+		</style>
+		<script type="text/javascript" src="jquery-3.2.1.js"></script>
+		<script type="text/javascript" src="bootstrap-datepicker.js"></script>
+	</head>
+	<body>
+		<div>
+			<input type="text" class="datepicker" placeholder="请选择日期"  style="margin: 20px 200px;"/>
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+	    $(function () {
+	    	$('.datepicker').on('focus',function(){
+//	    		alert(1)
+			console.log(1)
+	    	})
+	        $(".datepicker").datepicker({
+	            language: "zh-CN",
+	            autoclose: true,//选中之后自动隐藏日期选择框
+	            clearBtn: true,//清除按钮
+	            todayBtn: true,//今日按钮
+	            format: "yyyy-mm-dd"//日期格式，详见 http://bootstrap-datepicker.readthedocs.org/en/release/options.html#format
+	        });
+	    });
+	</script>
+</html>

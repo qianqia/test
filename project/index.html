@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			input.red{
+			color:#f00;
+			}
+		</style>
+	</head>
+	<body>
+		<ul>
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+		</ul>
+		<input class="red" readonlyunselectable="on" >
+		<input type="text" />
+	</body>
+	<script type="text/javascript">
+		var _li=document.getElementsByTagName('li')
+		for(var i=0;i<_li.length;i++){
+			_li[i].index=i;
+			_li[i].onclick=function(){
+				alert(this.index)
+			}
+		}
+	</script>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="jquery-3.2.1.js"></script>
+		<style type="text/css">
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			.ceng{
+				height: 100vh;
+				width: 100vw;
+				background: #333;
+				position: fixed;
+				top: 0;
+				left: 0;
+				display: none;
+				
+			}
+			.cengshang{
+				position: relative;
+				height: 200px;
+				width: 200px;
+				left: 0;
+				right: 0;
+				top: 40px;
+				margin: auto;
+				background: #fff;
+				display: none;
+			}
+			.error{
+				position: absolute;
+				width: 30px;
+				height: 30px;
+				border-radius: 50%;
+				font: 26px/30px '';
+				right: -40px;
+				top: -10px;
+				background: #fff;
+				text-align: center;
+				
+			}
+		</style>
+	</head>
+	<body>
+		<button>弹窗</button>
+		<div class="ceng" ></div>
+		<div class="cengshang" >
+			<div>hhhahahahhha</div>
+			<div class="error">x</div>
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+		document.getElementsByTagName('button')[0].onclick=()=>{
+			alertC()
+			}
+		function alertC(){
+			$('.ceng').css('display','block');
+			$('.cengshang').css('display','block')
+			$(".error").on('click',()=>{
+				$('.ceng').css('display','none');
+				$('.cengshang').css('display','none')
+			})
+			$(".ceng").on('click',()=>{
+				$('.ceng').css('display','none');
+				$('.cengshang').css('display','none')
+			})
+		}
+		
+	</script>
+</html>

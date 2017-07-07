@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body> 
+		
+		
+	</body>
+	<script type="text/javascript">
+		function Promising(){
+			var list=[];
+			this.then=function(fx){
+				list.push(fx)
+				return this;
+			}
+			this.resolve=function(){
+				if(list.length>0){
+					list.shift()()
+				}
+				
+			}
+		}
+		
+		
+		
+		var promesing=new Promising();
+		promesing.then(function(){
+			setTimeout(function(){
+				console.log('3s')
+				promesing.resolve()
+			},3000)
+			
+		}).then(function(){
+			setTimeout(function(){
+				console.log('2s')
+				promesing.resolve()
+			},2000)
+		}).then(function(){
+			setTimeout(function(){
+				console.log('1s')
+			},1000)
+		}).resolve()
+		
+		
+	</script>
+</html>
