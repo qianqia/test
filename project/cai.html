@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="jquery-3.2.1.js"></script>
+	</head>
+	<body>
+		<input type="file" name="" id="" value="" />
+	</body>
+	<script type="text/javascript">
+		$('input[type=file]').change(function(){
+		    var file=this.files[0];
+			console.log(file)
+		    var reader=new FileReader();
+		    console.log(reader)
+		    var image=new Image();
+		    reader.onload=function(){
+		        // 通过 reader.result 来访问生成的 DataURL
+		        var url=reader.result;
+//		        console.log(url)
+		        setImageURL(url);
+		    };
+		    reader.readAsDataURL(file);
+		    
+		  
+			function setImageURL(url){
+			    image.src=url;
+			   	console.log(image.src)
+			}
+			drawImage(image, 10, 10, 100, 100, 10, 10, 100, 100)
+			var x=10,  
+			    y=10,
+			    width=100,
+			    height=100;
+			
+			var canvas=$('<canvas width="'+width+'" height="'+height+'"></canvas>')[0],
+			    ctx=canvas.getContext('2d');
+			
+			ctx.drawImage(image,x,y,width,height,0,0,width,height);
+			$(document.body).append(canvas);
+		    var data=canvas.toDataURL();
+
+			// dataURL 的格式为 “data:image/png;base64,****”,逗号之前都是一些说明性的文字，我们只需要逗号之后的就行了
+			data=data.split(',')[1];
+			data=window.atob(data);
+			var ia = new Uint8Array(data.length);
+			for (var i = 0; i < data.length; i++) {
+			    ia[i] = data.charCodeAt(i);
+			};
+			
+			// canvas.toDataURL 返回的默认格式就是 image/png
+			var blob=new Blob([ia], {type:"image/png"});
+		    var fd=new FormData();
+			console.log(fd)
+			fd.append('file',blob);
+		});
+		
+			
+	</script>
+</html>
