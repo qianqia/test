@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{list-style: none;}
+        div{overflow: hidden;/*width: 960px;margin: 0 auto;给了这个属性可以改变宽度不会随着宽度的变化列数也变*/}
+        ul{float: left;}
+        li{width:200px; margin-bottom:10px;}
+    </style>
+    <script>
+        function rnd(n,m){
+            return parseInt(Math.random()*(m-n))+n;
+        }
+        function cl(){
+            var li = document.createElement('li');
+            li.style.height=rnd(100,500)+'px';
+            li.style.background='rgb('+rnd(0,255)+','+rnd(0,255)+','+rnd(0,255)+')';
+            return li;
+
+        }
+        window.onload=function(){
+            var aUl = document.getElementsByTagName('ul');
+            function c20(){
+                for(var i =0;i<20;i++){
+                    var arr =[];
+                    for(var j=0;j<aUl.length;j++){
+                        arr.push(aUl[j])
+                    }
+                    arr.sort(function(n,m){
+                        return n.offsetHeight- m.offsetHeight
+                    });
+                    arr[0].appendChild(cl());
+                }
+            }
+            c20();
+            window.onscroll=function(){
+                var arr = [];
+                for (var j = 0; j < aUl.length; j++) {
+                    arr.push(aUl[j])
+                }
+                arr.sort(function (n, m) {
+                    return n.offsetHeight - m.offsetHeight
+                });
+                var n = (document.body.scrollTop || document.documentElement.scrollTop) + document.documentElement.clientHeight;
+                if (n > arr[0].offsetHeight) {
+                    c20()
+                }
+            }
+        }
+        //http://www.w3school.com.cn/jsref/jsref_sort.asp
+    </script>
+</head>
+<body>
+<div>
+    <ul></ul>
+    <ul></ul>
+    <ul></ul>
+    <ul></ul>
+    <ul></ul>
+    <ul></ul>
+    <ul></ul>
+</div>
+</body>
+</html>

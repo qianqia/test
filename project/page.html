@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="reset.css"/>
+		<link rel="stylesheet" type="text/css" href="bootstrap.min.css"/>
+		<style type="text/css">
+			
+			/*cursor: not-allowed;不允许点击即为禁止状态*/
+			
+		</style>
+	</head>
+	<body>
+		<div id="box"></div>
+		<nav aria-label="Page navigation">
+		  <ul class="pagination">
+		    <li>
+		      <a href="#box" aria-label="Previous">
+		        <span aria-hidden="true">上一页</span>
+		      </a>
+		    </li>
+		    <li><a href="#box">1</a></li>
+		    <li><a href="#box">2</a></li>
+		    <li><a href="#box">3</a></li>
+		    <li><a href="#box">4</a></li>
+		    <li><a href="#box">5</a></li>
+		    <li>
+		      <a href="#box" aria-label="Next">
+		        <span aria-hidden="true">下一页</span>
+		      </a>
+		    </li>
+		  </ul>
+		</nav>
+		
+		
+		
+		<nav aria-label="...">
+		  <ul class="pagination">
+		    <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">上一页</span></a></li>
+		    <li class="active"><a href="#">1 <span ></span></a></li>
+		    <li ><a href="#">2 <span ></span></a></li>
+		    <li>
+		      <a href="#" aria-label="Next">
+		        <span aria-hidden="true">下一页</span>
+		      </a>
+		    </li>
+		  </ul>
+</nav>
+	</body>
+	<script type="text/javascript" src="jquery.js"></script>
+	<!--<script type="text/javascript" src="bootstrap.min.js"></script>-->
+	<script type="text/javascript">
+		$("a").on("click",function(){
+			$("#box").html($(this).parent().index());
+		})
+	</script>
+</html>

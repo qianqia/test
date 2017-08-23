@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		 $(window).on('load',function () {
+	        loadImg();
+	    });
+	
+	    $('.change-works a').on('click',function () {
+	        $.ajax({
+	            type: "post",
+	            url: '/works/get-random-rm-pro',
+	            data: {num:4},
+	            dataType: "json",
+	            success: function(json){
+	                var main_content = JsTpl.renderer['hp_rm'].render(json);
+	                $('#hp_rm_works').html(main_content);
+	            }
+	        });
+	    });
+	
+	    $('.change-painters a').on('click',function () {
+	        $.ajax({
+	            type: "post",
+	            url: '/user/get-random-painter',
+	            data: {num:6},
+	            dataType: "json",
+	            success: function(json){
+	                var main_content = JsTpl.renderer['hp_rm_painter'].render(json);
+	                $('#hp_rm_painters').html(main_content);
+	            }
+	        });
+	    });
+	
+	
+	});
+	
+	function  loadImg() {
+	    var box = $('.new_work');
+	    var box_width = box.eq(0).width();
+	    var num = Math.floor(960/box_width);
+	    var boxArr = [];
+	
+	    box.each(function (index,value) {
+	        var box_height = box.eq(index).height()+10;
+	        if(index<num){
+	            boxArr[index] = box_height
+	        }else{
+	            var min_box_height = Math.min.apply(null,boxArr);
+	            var min_box_index = $.inArray(min_box_height,boxArr);
+	
+	            $(value).css({
+	                "position" : "absolute",
+	                "top" : (min_box_height)+'px',
+	                "left" : (box.eq(min_box_index).position().left)+'px'
+	            });
+	
+	            boxArr[min_box_index] += box.eq(index).height()+10;
+	        }
+	    });
+	
+	    $('.section.part5 ul').height (Math.max.apply(null,boxArr));
+	}
+	
+//另一种
+$(function () {
+    //首页瀑布流效果
+    $(window).on('load',function () {
+        getMore();
+        loadImg();
+    });
+
+
+    //瀑布流加载所有产品
+    var i=1;
+    var requestUrl = '?r=works/get-works-per-page';
+    var size = 12;
+    var page = 0;//开始页数
+
+    function getMore(){
+        $("#loading").html('努力加载中......');
+        //每次加载12个
+
+        $.ajax({
+            type: "post",
+            url: '/works/get-works-per-page',
+            data: {size:size,page:page++},
+            success: function(data){
+                    if(data){
+                        $(".content3_box2 ul").append(data);
+                        loadImg();
+                        // page++;
+                        $("#loading").html('<div class="view_more"><a href="works/list"><span>查看更多</span></a></div>');
+                        // $(window).unbind('scroll');
+                        i=1
+                    }else{
+                        $("#loading").html('<div class="view_more"><a href="works/list"><span>查看更多</span></a></div>');
+                        $(window).unbind('scroll');
+                    }
+
+            }
+        });
+    }
+    /*滚动到底部的时候*/
+    $(window).bind("scroll",function(){
+        var bot = 60;
+
+        if((bot + $(window).scrollTop()) >=($(document).height() - $(window).height()) && i==1) {
+            i=0;
+            if(page < 1){
+                getMore();
+            }
+        }
+    });
+
+    $('.change-works a').on('click',function () {
+        $.ajax({
+            type: "post",
+            url: '/works/get-random-rm-pro',
+            data: {num:6},
+            dataType: "json",
+            success: function(json){
+                var main_content = JsTpl.renderer['hl_rm'].render(json);
+                $('#hl_rm_works').html(main_content);
+                $('.rm-works:last-child').css('margin-right',0);
+            }
+        });
+    });
+
+    $('.change-painters a').on('click',function () {
+        $.ajax({
+            type: "post",
+            url: '/works/get-random-painter',
+            data: {num:5},
+            dataType: "json",
+            success: function(json){
+                var main_content = JsTpl.renderer['hl_rm_painter'].render(json);
+                $('#hl_rm_painters').html(main_content);
+                $('.works_author:last-child').css('margin-right',0);
+            }
+        });
+    });
+});
+
+function  loadImg() {
+
+    var imgdefereds=[];
+    $('img').each(function(){
+        var dfd=$.Deferred();
+        $(this).bind('load',function(){
+            dfd.resolve();
+        }).bind('error',function(){
+            //图片加载错误，加入错误处理
+            // dfd.resolve();
+        })
+        if(this.complete) setTimeout(function(){
+            dfd.resolve();
+        },1000);
+        imgdefereds.push(dfd);
+    });
+    //图片加载完毕后再执行该操作
+    var box = $('.new_work');
+    var box_width = box.eq(0).width();
+    var num = Math.floor(960/box_width);
+    var boxArr = [];
+    $("img[class='img-load']").each(function() {
+        var url_img_height = $(this).data('height');
+        console.log(url_img_height);
+        $(this).css("height",url_img_height-10);
+        $(this).css("width", 309);
+    });
+
+    box.each(function (index,value) {
+        $(value).find("img").lazyload({
+            effect: "fadeIn"
+        });
+        $(value).find('img').css('padding-top', 0);
+        var box_height = box.eq(index).height()+10;
+        if(index<num){
+            boxArr[index] = box_height
+        }else{
+            var min_box_height = Math.min.apply(null,boxArr);
+            var min_box_index = $.inArray(min_box_height,boxArr);
+
+            $(value).css({
+                "position" : "absolute",
+                "top" : (min_box_height)+'px',
+                "left" : (box.eq(min_box_index).position().left)+'px'
+            });
+
+            boxArr[min_box_index] += box.eq(index).height()+10;
+        }
+    });
+
+    $('.content3_box2 ul').height (Math.max.apply(null,boxArr));
+    // });
+
+
+}
+
+	
+	
+	</script>
+</html>

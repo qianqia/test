@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="jquery.lazyload.min.js"></script>
+	<script type="text/javascript">
+		$.ajax({
+			type:"get",
+			url:"http://api.dev.gilieye.com/search?tag=动漫",
+			async:true,
+			success:function(data){
+				console.log(data.data)
+			},
+			error:function(){
+				console.log("huoqushibai")
+			}
+		});
+			</script>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<input type="file" value="1" />
+	</body>
+	<script type="text/javascript" src="jquery-3.2.1.js"></script>
+	<script type="text/javascript">
+		var ipt=document.getElementsByTagName('input')[0];
+		var i=0;
+		ipt.onclick=function(){
+			i++;
+			ipt.disabled="";
+			console.log(ipt.files[0]);
+			console.log(i);
+//			if(i==10){
+//				ipt.disabled="disabled";
+//			}else{
+//				ipt.disabled="";
+//			}
+		}
+		$("input").on("change",function(){
+			$(this).removeAttr("value");
+		})
+	</script>
+</html>

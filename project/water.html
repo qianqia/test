@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		
+	</body>
+	<script type="text/javascript">
+		_contant += <div class='module' ><div class='box_header '><div class='fl'><img src='http://oihfvurw3.bkt.clouddn.com" + userAvatar + "'/><span>" + unescape(userName) + "</span></div><div class='fr box_header_follow'>删除</div></div>" +
+				"<div class='box_body' id='box_body'><img class='box_body_img' myDetailId='" + data[i].id + "' src='http://oihfvurw3.bkt.clouddn.com/" + data[i].cover + "'/><div class='box_body_sign'><div class='box_body_sign_wrap'>" + tags + "</div>" +
+				"<div class='box_body_sign_describe'>" + description + "</div></div></div>" +
+				"<div class='box_footer'><img src='images/img_like_num.png' class='img_like_num fl'/>" +
+				"<span class='fl link_num'>" + data[i].likes + "</span>" +
+				"<span class='fl myView' myView='"+data[i].id+"'>评论</span>" +
+				"<span class='fl myShare' myShare='"+data[i].id+"'>分享</span>" +
+				"<img src='" + is_like + "' class='img_like_no fr' myId='" + data[i].id + "'/></div></div>"
+				
+				
+				
+				
+		_contant += "<div class='module' >"+
+		"<div class='box_body' id='box_body'><img class='box_body_img' myDetailId='" + data[i].id + 
+		"' src='" + imgsrc + "'/>"+
+		"<div class='box_body_sign'><div class='box_body_sign_wrap'>" + tags + "</div>" +
+		"<div class='box_body_sign_describe'>" + description + "</div></div></div>" +
+		"<div class='box_footer'><img src='images/img_like_num.png' class='img_like_num fl'/>" +
+		"<span class='fl link_num'>" + data[i].likes + "</span>" +
+		"<span class='fl myDel' myDel='"+data[i].id+"'>删除</span>" +
+		"<span class='fl myView' myView='"+data[i].id+"'>评论</span>" +
+		"<span class='fl myShare' myShare='"+data[i].id+"'>分享</span>" +
+		"<img src='" + is_like + "' class='img_like_no fr"+data[i]['is_like']+" myId='" + data[i].id + "'/></div></div>"
+	</script>
+</html>
