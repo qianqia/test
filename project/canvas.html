@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#box{
+				height: 100px;
+				width: 300px;
+				border:  1px solid #eee;
+			}
+			#tulip{
+				float: left;
+				margin: 10px;
+				height: 80px;
+				width: 280px;			
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<img src="img/u6896.png" id="tulip"/>
+		</div>
+		<canvas  width="150" height="150" id="myCanvas"></canvas>
+	</body>
+	<script type="text/javascript">
+		var c=document.getElementById("myCanvas");
+		var ctx=c.getContext("2d");
+		var img=document.getElementById("tulip");
+		ctx.drawImage(img,10,10,240,160,0,0,150,150);
+	</script>
+</html>

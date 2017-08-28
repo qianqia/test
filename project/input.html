@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			textarea{
+				/*min-height: 24px;
+				height: auto;*/
+				line-height: 24px;
+				/*max-height: 72px;*/
+			/*	overflow-y:auto ;*/
+				width: 300px;
+				border: 1px solid #eee;
+				border-radius: 10px;
+				margin: 10px auto;
+				display: block;
+				resize:none;
+			}
+		</style>
+	</head>
+	<body>
+		<textarea name="" rows="" cols="" id="textarea"></textarea>
+	</body>
+	<script type="text/javascript">
+		function makeExpandingArea(el) {
+    var setStyle = function(el) {
+        el.style.height = 'auto';
+        el.style.height = el.scrollHeight + 'px';
+           console.log(el.scrollHeight);
+    }
+    var delayedResize = function(el) {
+        window.setTimeout(function() {
+            setStyle(el)
+        },
+        0);
+    }
+    if (el.addEventListener) {
+        el.addEventListener('input',function() {
+            setStyle(el)
+        },false);
+        setStyle(el)
+    } else if (el.attachEvent) {
+        el.attachEvent('onpropertychange',function() {
+            setStyle(el)
+        });
+        setStyle(el)
+    }
+    if (window.VBArray && window.addEventListener) { //IE9
+        el.attachEvent("onkeydown",function() {
+            var key = window.event.keyCode;
+            if (key == 8 || key == 46) delayedResize(el);
+
+        });
+        el.attachEvent("oncut",function() {
+            delayedResize(el);
+        }); //处理粘贴
+    }
+}
+makeExpandingArea(textarea);
+	</script>
+</html>

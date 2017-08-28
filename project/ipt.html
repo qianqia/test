@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		 <script src="jquery-3.2.1.js"></script>
+		 <style>
+		 	input{
+		 		outline: none;
+		 	}
+		 </style>
+	</head>
+	<body>
+		<input type="text" onkeyup=my() name="ipt" id="ipt" value="" />
+		<input type="text" placeholder="111" name="" id="" value="" />
+	</body>
+	<script type="text/javascript">
+		function my(){
+			console.log(1)
+			if($("#ipt").val()!==""){
+				$("#ipt").css("border","1px solid blue")
+			}
+		}
+	</script>
+</html>

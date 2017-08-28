@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		var uploader_pub = Qiniu.uploader({
+        runtimes: 'html5,flash,html4',
+        browse_button: 'public_pickfiles',
+        container: 'container',
+        drop_element: 'public_pickfiles',
+        max_file_size: '15mb',
+        flash_swf_url: 'bower_components/plupload/js/Moxie.swf',
+        dragdrop: true,
+        max_retries:3,
+        chunk_size: '4mb',
+        multi_selection: !(mOxie.Env.OS.toLowerCase()==="ios"),
+        uptoken_func: function(){
+          
+          
+        },
+        multi_selection: true,
+        unique_names: false,
+        save_key: false,
+      domain: $('#public_domain').val(),
+      get_new_uptoken: false,
+      auto_start: false,
+      //unique_names: true,      //设置所有文件名唯一
+      filters: {  
+        mime_types : [ //只允许上传图片  
+            { title : "Image files", extensions : "jpg,jpeg,gif,png" },  
+        ],  
+        prevent_duplicates : false //不允许选取重复文件  
+      },  
+      log_level: 5,
+        init: {
+            'Key': function(up, file) {
+              var now = new Date();
+                    var date = now.getFullYear()+((now.getMonth()+1)<10?"0":"")+(now.getMonth()+1)+(now.getDate()<10?"0":"")+now.getDate();
+                    var lastimg="work/"+date+"/"+getFileName(file.name);
+            return lastimg;
+              },
+          'FileUploaded': function(up, file, info) {
+                var progress = new FileProgress(file, 'public_fs');
+                info = eval('('+info+')');
+                var imgKey = encodeURI($("#public_domain").val()+info.key);
+                imageFile.push({image:imgKey+"",isLayer:false})
+                coverHash.push({hash:info.hash,key:info.key})
+
+            },
+          'FilesAdded': function(up, files) {
+                plupload.each(files,function(file,index) {
+                  var tempArr = file.name.split(".");
+                  var ext;
+                  if (tempArr.length === 1 || (tempArr[0] === "" && tempArr.length === 2)) {
+                    ext = "";
+                  } else {
+                    ext = tempArr.pop().toLowerCase(  ); //get the extension and make it lower-case
+                  }
+                  var now = new Date();
+                  var date = now.getFullYear()+((now.getMonth()+1)<10?"0":"")+(now.getMonth()+1)+(now.getDate()<10?"0":"")+now.getDate();
+                  var keyName="work/"+date+"/"+getTimeHSS()+"/"+index+"."+ext;
+                  file.name=keyName;
+                  var reader = new FileReader();
+                        reader.readAsDataURL(files[0].getNative());
+                        reader.onload = (function (e) {
+                          var image = new Image();
+                          image.src = e.target.result;
+                          image.onload = function (){
+                              file.width = this.width;
+                              file.height = this.height;
+                          };
+                        });
+                });
+
+                //图片上传前预览
+                for (var i = 0; i < files.length; i++) {
+                    var fileItem = files[i].getNative(),
+                    url = window.URL || window.webkitURL || window.mozURL;
+                    var src = url.createObjectURL(fileItem);
+                    var tmpl = '<li style="background-image:url(#url#)" data-name='+files[i].name+'  data-url="#url#"><div class="cancer_img"></div></li>';
+                    $(".public_add_more").before($(tmpl.replace(/#url#/ig, src)));
+                }
+                if($('#public_fs li').length>0){
+                    $('#public_fs').removeClass('img_area_back');
+                    $('.public_add_more').css('display','block');
+                }
+                if($('#public_fs li').length>=9){
+                    $('.public_add_more').css('display','none');
+                }
+                      var sss = uploader_pub.files;
+              console.log(sss)
+                      if(sss.length>9) { // 最多上传9张图
+                  swal({
+                    text: '最多只能上传9张图',
+                    showConfirmButton:false,
+                    target:'.mySwl_box',
+                    width:'auto',
+                    timer:1000,
+                    animation:false,
+                  }).catch(swal.noop)
+                  var i = 0;
+                  $('#public_fs li').each(function(){
+                        i++
+                  })
+                  uploader_pub.files.splice(9,uploader_pub.files.length)
+                    if (i>8) {
+                        $("#public_fs li:gt(8)").remove();
+                    }
+                  return;
+              }else{
+                isRepeat(sss)
+              }
+              function isRepeat(arr){
+                for( var i=0;i<arr.length;i++) {
+                  for(var j=i+1;j<arr.length;j++) {
+                      if (arr[i].name==arr[j].name) {
+                          swal({
+                            text: '图片重复',
+                            showConfirmButton:false,
+                            target:'.mySwl_box',
+                            width:'auto',
+                            timer:1000,
+                            animation:false,
+                          }).catch(swal.noop)
+                          uploader_pub.removeFile(uploader_pub.files[j])
+                          $("#public_fs li").eq(j).remove();
+                          i--;
+                      }
+                  }
+                }
+                return arr;
+              }
+              // function isRepeat(arr){
+              //        var hash = {};
+              //        for(var i in arr) {
+              //           $.each(hash,function(index,main){
+              //               if(hash[arr[i].name]){
+              //                   swal({
+              //                     text: '图片重复!',
+              //                     showConfirmButton:false,
+              //                     showLoaderOnConfirm:false,
+              //                     width:300,
+              //                     timer:1000
+              //                   })
+              //                   uploader_pub.removeFile(uploader_pub.files[i])
+              //                   $("#public_fs li").eq(i).remove();
+              //                   return;
+              //               }else{
+              //                 console.log('没有重复发')
+              //               }
+              //           })
+              //           hash[arr[i].name] = true;
+              //        }
+              //        return false;
+              //   }
+            },
+            'UploadComplete': function() {
+              var images= JSON.stringify(imageFile)
+              // alert(coverHash[0])
+              console.log(imageFile)
+              var content = $('.public_add .emoji-wysiwyg-editor').text();
+              var str_content=content.replace(/&nbsp;/ig,' ');
+              var userId = $('#reg_header_userId').val()
+                if(content.length>255){
+                  $('.loading').css('display','none');
+                  swal({
+                    text:'表情描述不能超过255个字~',
+                    showConfirmButton:false,
+                    target:'.mySwl_box',
+                    width:'auto',
+                    timer:1000,
+                    animation:false,
+                  }).catch(swal.noop)
+                }else{
+                  if (coverHash.length!=0 ) {
+                    if(imageFile.length==1){
+                      var coverHash_one=coverHash[0].hash;
+                      $.ajax({
+                        type:'post',
+                        url:'/setting/cheackHash',
+                        data:{hash:coverHash_one},
+                        success:function(data){
+                          if(data.code==200){
+                            $('#pub_imageFile').val(images);
+                            $('#pub_coverHash').val(coverHash_one);
+                            cookieTopic(str_content)
+                            $.ajax({
+                                type:'post',
+                                url:'/imgupload',
+                                data:{content:str_content,imagedata:images,coverHash:coverHash_one},
+                                success:function(data){
+                                    $('.loading').css('display','none');
+                                    if(data.code==200){
+                                        swal({
+                                          text:'发布成功~',
+                                          showConfirmButton:false,
+                                          target:'.mySwl_box',
+                                          width:'auto',
+                                          timer:1400,
+                                          animation:false,
+                                        }).catch(swal.noop)
+                                        //初始化
+                                        updataInit()
+                                        //初始化 end$('.created-topic').fadeOut('fast')
+                                        $('.fabu').fadeOut('fast')
+                                        window.location.href='/user/'+userId
+                                    }else{
+                                        coverHash =[];
+                                        imageFile = [];
+                                        uploader_pub.files.splice(0,uploader_pub.files.length);
+                                        $('.public_add_imgarea').find('.public_add_more').css('display','block')
+                                        $('.public_add_imgarea>li').remove();
+                                        swal({
+                                          text: data.msg,
+                                          showConfirmButton:false,
+                                          target:'.mySwl_box',
+                                          width:'auto',
+                                          timer:1000,
+                                          animation:false,
+                                        }).catch(swal.noop)
+                                    }
+                                    $('.loading').css('display','none');
+                                }
+                            });
+                          }else{
+                            $('.loading').css('display','none');
+                            swal({
+                              text:data.msg,
+                              showConfirmButton:false,
+                              target:'.mySwl_box',
+                              width:'auto',
+                              timer:1400,
+                              animation:false,
+                            }).catch(swal.noop)
+                            //初始化
+                            updataInit()
+                          }
+                        }//success
+                      })
+                    }else{
+                      var coverHash_one=coverHash[0].hash;
+                      $('#pub_imageFile').val(images);
+                      $('#pub_coverHash').val(coverHash_one);
+                      cookieTopic(str_content)
+                      $.ajax({
+                          type:'post',
+                          url:'/imgupload',
+                          data:{content:str_content,imagedata:images,coverHash:coverHash_one},
+                          success:function(data){
+                              if(data.code==200){
+                                  swal({
+                                    text:'发布成功~',
+                                    showConfirmButton:false,
+                                    target:'.mySwl_box',
+                                    width:'auto',
+                                    timer:1400,
+                                    animation:false,
+                                  }).catch(swal.noop)
+                                  //初始化
+                                  updataInit()
+                                  //初始化 end
+                                  $('.fabu').fadeOut('fast')
+                                  // window.location.href='/user/'+userId
+                              }else{
+                                  coverHash =[];
+                                  imageFile = [];
+                                  uploader_pub.files.splice(0,uploader_pub.files.length);
+                                  $('.public_add_imgarea').find('.public_add_more').css('display','block')
+                                  $('.public_add_imgarea>li').remove();
+                                  swal({
+                                    text: data.msg,
+                                    showConfirmButton:false,
+                                    target:'.mySwl_box',
+                                    width:'auto',
+                                    timer:1000,
+                                    animation:false,
+                                  }).catch(swal.noop)
+                              }
+                              $('.loading').css('display','none');
+                          }
+                      });
+                    }
+                    
+                  } else{
+                    $('.loading').css('display','none');
+                    swal({
+                      text: '请上传图片',
+                      showConfirmButton:false,
+                      target:'.mySwl_box',
+                      width:'auto',
+                      timer:1000,
+                      animation:false,
+                    }).catch(swal.noop)
+                  }
+                }
+            },
+            'Error': function(up, err, errTip) {
+               $('.loading').css('display','none');
+               console.log(err)
+               
+            }
+        }
+    });
+	</script>
+</html>

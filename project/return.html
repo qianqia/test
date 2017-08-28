@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript" src="js/cookie.js"></script>
+	<script type="text/javascript">
+		function getCook(){
+			var a=1,b=2,c=3;
+			return [a,b,c]
+		}
+		console.log(getCook());
+		function getCookie(){
+			let _cookie = Cookie.readCookie().split(";");
+			let _list = [];
+			let _list1 = [];
+			var token, user, tokenFlag;
+		
+			for(var i = 0; i < _cookie.length; i++) {
+				_list.push(_cookie[i].split('=')[0])
+				_list1.push(_cookie[i].split('=')[1])
+			}
+			for(var i = 0; i < _list.length; i++) {
+				_list[i] = _list[i].replace(/(^\s*)|(\s*$)/g, "");
+				if(_list[i] == "token1") {
+		
+					token = 'Bearer ' + _list1[i]
+		
+				} else if(_list[i] == "user1") {
+					user = _list1[i];
+				} else {
+					if(_list[i] == "token") {
+						token = 'Bearer ' + _list1[i]
+		
+					} else if(_list[i] == "user") {
+						user = _list1[i];
+					}
+				}
+				if(_list[i] == "tokenFlag") {
+					tokenFlag = _list1[i];
+				}
+			}
+			return [token,user,tokenFlag]
+		}
+		console.log( getCookie());
+	</script>
+</html>

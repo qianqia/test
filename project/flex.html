@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		
+		<style type="text/css">
+			.fl{
+				float: left;
+			}
+			.box{
+				width: 850px;
+				border: 1px solid #eee;
+				min-height: 100px;
+				/*display: flex;
+				flex-direction: row;*/
+			}
+			.inner_box{
+				height: 100px;
+				width:100px;
+				background: #ff0;
+			}
+			.inner{
+				display: flex;
+				/*justify-content: space-around;*/
+				flex-direction :row;
+				flex-wrap:wrap;
+				
+				
+			}
+			.add{
+				height: 100px;
+				width: 100px;
+				background: #f0f;
+				margin: 10px;
+				float: left;
+				display: inline-block;
+			}
+		</style>
+		<script type="text/javascript" src="jquery-3.2.1.js"></script>
+	</head>
+	<body>
+		<div class="box">
+			<div class="inner fl"></div>
+			<div class="inner_box fl"></div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		$('.inner_box').click(function(){
+			var div="<div class='add'>hhahah </div>"
+			$('.inner').append(div)
+		})
+	</script>
+</html>

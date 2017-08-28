@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>basic-demo</title>
+		<script type="text/javascript" src="jquery.js"></script>
+		<script src="template.js"></script>
+		<script type="text/javascript" src="tem.js"></script>
+	</head>
+
+	<body>
+		<div id="content"></div>
+		<script id="tpl" type="text/html">
+			<ul>
+			    <%for(var i = 0; i < list.length; i++) {%>
+			    <li><%:=list[i].id%></li>
+			    <%}%>
+			</ul>
+		</script>
+	</body>
+</html>

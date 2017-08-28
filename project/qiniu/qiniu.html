@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/cookie.js"></script>
+		<script type="text/javascript" src="../js/plupload.full.min.js"></script>
+		<script type="text/javascript" src="../js/qiniu.js"></script>
+	</head>
+	<body>
+		<p class="tip1">本demo实现的图片预览功能需要浏览器支持data URL，IE8+以及其他标准浏览器都是支持的</p>
+		<div class="btn-wraper" style="position: relative;" id="container">
+			<button id="pickfiles">选择文件</button>
+			<ul id="file-list">
+				
+			</ul>
+		</div>
+		<button id="uploadfiles">上传</button>
+	</body>
+	<script type="text/javascript">
+		var curryTime = new Date().getTime(); 
+		var inner;
+		console.log(curryTime)
+		var imgType;
+		var index=0;
+		var uploader = Qiniu.uploader({
+			runtimes: 'html5,flash,html4', //上传模式,依次退化
+			browse_button: 'pickfiles', //上传选择的点选按钮，**必需**
+			uptoken:getTokenMessage().token,
+			// uptoken_url: getToken(), //Ajax请求upToken的Url，**强烈建议设置**（服务端提供）
+			// uptoken : '', //若未指定uptoken_url,则必须指定 uptoken ,uptoken由其他程序生成
+			// unique_names: true, // 默认 false，key为文件名。若开启该选项，SDK为自动生成上传成功后的key（文件名）。
+			// save_key: true, // 默认 false。若在服务端生成uptoken的上传策略中指定了 `sava_key`，则开启，SDK会忽略对key的处理
+			domain: 'http://qiniu-plupload.qiniudn.com/', //bucket 域名，下载资源时用到，**必需**
+			get_new_uptoken: false, //设置上传文件的时候是否每次都重新获取新的token
+			container: 'container', //上传区域DOM ID，默认是browser_button的父元素，
+			max_file_size: '100mb', //最大文件体积限制
+			flash_swf_url: 'Moxie.swf', //引入flash,相对路径
+			max_retries: 3, //上传失败最大重试次数
+			dragdrop: true, //开启可拖曳上传
+			drop_element: 'container', //拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
+			chunk_size: '4mb', //分块上传时，每片的体积
+			 //文件类型过滤，这里限制为图片类型
+			filters: {
+		      mime_types : [
+		        {title : "Image files", extensions: "jpg,jpeg,gif,png"}
+		      ]
+		    },
+			auto_start: false, //选择文件后自动上传，若关闭需要自己绑定事件触发上传
+			init: {
+			'FilesAdded': function(up, files) {
+			plupload.each(files, function(file) {
+			// 文件添加进队列后,处理相关的事情
+				imgType=file.name.split(".")[1];
+			});
+			},
+			'BeforeUpload': function(up, file) {
+			// 每个文件上传前,处理相关的事情
+			},
+			'UploadProgress': function(up, file) {
+			// 每个文件上传时,处理相关的事情
+			},
+			'FileUploaded': function(up, file, info) {
+			// 每个文件上传成功后,处理相关的事情
+			// 其中 info 是文件上传成功后，服务端返回的json，形式如
+				console.log(info);
+//				var domain = up.getOption('domain');
+//	        	var res = eval('(' + info + ')');
+//	        	var sourceLink = domain + res.key;//获取上传文件的链接地址
+	        	
+			// {
+			// "hash": "Fh8xVqod2MQ1mocfI4S4KpRL6D98",
+			// "key": "gogopher.jpg"
+			// }
+			// 参考http://developer.qiniu.com/docs/v6/api/overview/up/response/simple-response.html
+			
+				var domain = up.getOption('domain');
+	            var res = jQuery.parseJSON(info.response);
+	            var sourceLink = domain + res.key; //获取上传成功后的文件的Url
+			 	console.log(sourceLink);
+			 	inner+="<li class='item' key='" + res.key + "'>" +
+		                    "   <img src='" + sourceLink + "' />" +
+		                    "</li>"
+			 	$('#file-list').append(inner)
+			},
+			'Error': function(up, err, errTip) {
+			//上传出错时,处理相关的事情
+			},
+			'UploadComplete': function() {
+			//队列文件处理完毕后,处理相关的事情
+			},
+			'Key': function(up, file) {
+			// 若想在前端对每个文件的key进行个性化处理，可以配置该函数
+			// 该配置必须要在 unique_names: false , save_key: false 时才生效
+				index++;
+				var key = "avatar/"+curryTime+"/"+index+"."+imgType;
+				
+			// do something with key here
+				return key
+			}
+		}
+	});
+
+// domain 为七牛空间（bucket)对应的域名，选择某个空间后，可通过"空间设置->基本设置->域名设置"查看获取
+
+// uploader 为一个plupload对象，继承了所有plupload的方法，参考http://plupload.com/docs
+
+	//获取cookie中用户信息
+	 let  _cookie=Cookie.readCookie().split(";");
+	 let  _list=[];
+	 let  _list1=[];
+	 var token,user,tokenFlag;
+	 
+	 for(var i=0;i<_cookie.length;i++){
+	 	_list.push(_cookie[i].split('=')[0])
+	 	_list1.push(_cookie[i].split('=')[1])
+	}
+	 for(var i=0;i<_list.length;i++){
+		_list[i]=_list[i].replace(/(^\s*)|(\s*$)/g, "");
+	 	if(_list[i]=="token1"){
+	 		
+	 		token='Bearer '+_list1[i]
+	 		
+	 	}else if(_list[i]=="user1"){
+	 		user=_list1[i];
+	 	}else {
+	 		if(_list[i]=="token"){
+	 			token='Bearer '+_list1[i]
+	 			
+	 		}else if(_list[i]=="user"){
+	 			user=_list1[i];
+	 		}
+	 	}
+	 	if(_list[i]=="tokenFlag"){
+	 		tokenFlag=_list1[i];
+	 	}
+	 }
+		function getTokenMessage() {
+			var token = {};
+			$.ajax({
+				type:'get',
+				url:"http://api.dev.gilieye.com/file/token",
+				async:false,
+				beforeSend: function(xhr) {
+			      xhr.setRequestHeader("Authorization", token);
+			  	},
+				success:function (data) {
+					
+					if(data.message="成功"){
+						token.token = data.data;
+					}
+				}
+			})
+			return token;
+		}
+		document.getElementById('uploadfiles').onclick = function() {
+			uploader.start();
+		}
+		
+
+
+	</script>
+</html>

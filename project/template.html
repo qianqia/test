@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>basic-demo</title>
+		<script src="template.js"></script>
+	</head>
+
+	<body>
+		<div id="content"></div>
+		<script id="tpl" type="text/html">
+			<ul>
+			    <%for(var i = 0; i < list.length; i++) {%>
+			    <li><%:=list[i].name%></li>
+			    <%}%>
+			</ul>
+		</script>
+	</body>
+	
+	<script type="text/javascript">
+		var tpl = document.getElementById('tpl').innerHTML;
+		var inner=template(tpl, {list: [{name: "yan"},{name: "haijing"}]});
+		document.getElementById('content').innerHTML=inner
+	</script>
+
+</html>

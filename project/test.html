@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			img{
+				width: 310px;
+				margin: 10px auto;
+				visibility: hidden;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<img src="http://oihfvurw3.bkt.clouddn.com//1500003083.jpg"/>
+		</div>
+		<div>加载中。。。</div>
+	</body>
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript">
+		$('img').load(function(){
+		 	$(".box").css({
+				"height":$(this).height()
+			});
+			console.log($(this).height())
+//			$(this).hide();
+		});
+	</script>
+</html>
