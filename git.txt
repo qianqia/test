@@ -1,0 +1,29 @@
+https://segmentfault.com/q/1010000003061640
+
+
+git config --global user.name "yourname"
+git config --global user.email "youremail"
+生存密钥：
+ssh-keygen -t rsa -C "haiyan.xu.vip@gmail.com"
+按3个回车，密码为空。
+
+在github上添加ssh密钥 在setting中找到ssh公钥添加公钥，名字和上面的一样，下面的要去id_rsa.pub中复制所有内容进令
+
+
+
+git更换地址要执行的命令
+1、
+git remote remove origin
+2、
+git remote add origin    地址（git@bitbucket.org:gililove/eye.git）
+3、
+如果git add .不行
+执行git status\
+On branch master
+4、
+在执行git add .即可
+
+5、提交远程仓库
+git push origin master -u
+6、添加其他远程仓库
+git remote add github
