@@ -1,0 +1,41 @@
+http://element.eleme.io/#/zh-CN/component/quickstart element-ui
+http://www.cnblogs.com/v-weiwang/p/5732423.html 第三方登陆地址
+http://www.qdfuns.com/notes/17724/b8010e4700be1ebd92b3478a8b47b8dd.html  第三方分享
+http://www.qdfuns.com/notes/17724/b8010e4700be1ebd92b3478a8b47b8dd.html qq分享
+http://www.ruanyifeng.com/blog/2011/08/a_detailed_explanation_of_jquery_deferred_object.html   deferred对象
+http://tieba.baidu.com/p/3168464736 瀑布流询问
+
+
+各大开放平台注册账户获取AppKey和AppSecret 
+Mob开放平台地址：http://www.mob.com/#/index 
+QQ开放平台地址：http://open.qq.com/ 
+http://wiki.open.qq.com/wiki/%E6%B3%A8%E5%86%8C%E6%88%90%E4%B8%BA%E5%BC%80%E5%8F%91%E8%80%85
+
+
+新浪微博开放平台地址：http://open.weibo.com/ 
+微信开放平台地址：https://open.weixin.qq.com/ 
+百度开放平台地址：http://apps.bdimg.com/
+
+
+远程仓库管理
+https://bitbucket.org
+tower 
+https://hk.tower.im/users/sign_up?team_name=Gili%E7%88%B1
+企业邮箱
+https://exmail.qq.com/
+七牛上传图片
+https://developer.qiniu.com/kodo/sdk/1283/javascript
+
+git 命令
+http://www.cnblogs.com/cspku/articles/Git_cmds.html
+
+http://blog.sina.com.cn/s/blog_b78a57180102v8vj.html 微博分享
+
+http://blog.csdn.net/u014607184/article/details/52372551 上传图片
+
+https://github.com/hyq2015/canvas_crop_img/blob/master/canvas.html 剪切图片上传后台
+
+http://wow.techbrood.com/fiddle/fork?id=2580 图片裁剪画图
+
+
+https://segmentfault.com/q/1010000004274486 询问七牛案例
