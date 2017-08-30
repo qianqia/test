@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		
+		function Animal (name) {
+		  // 属性
+		  this.name = name || 'Animal';
+		  // 实例方法
+		  this.sleep = function(){
+		    console.log(this.name + '正在睡觉！');
+		  }
+		}
+		// 原型方法:将方法挂载在构造函数的原型上
+		
+		Animal.prototype.eat = function(food) {
+		  console.log(this.name + '正在吃：' + food);
+		};
+//		var animal=new Animal();
+//		animal.eat('汉堡');
+//		console.log(animal);
+
+		//原型链继承：将构造函数的实例化对象挂载在另一个构造函数上实现原型链继承
+//		function Cat(){ 
+//			
+//		}
+//		Cat.prototype = new Animal();
+//		Cat.prototype.name = 'cat';
+//		
+//		//　Test Code
+//		var cat = new Cat();
+//		console.log(cat)
+//		console.log(cat.name);
+//		console.log(cat.eat('fish'));
+//		console.log(cat.sleep());
+//		console.log(cat instanceof Animal); //true 
+//		console.log(cat instanceof Cat); //true
+		
+		
+		//构造器继承：使用父类的构造函数来增强子类实例，等于是复制父类的实例属性给子类（没用到原型）
+		function Cat(name){
+			//使用call继承的构造函数不是自己的，只是借来用用
+		    Animal.call(this);
+		   //此处那么覆盖掉Animal中的name
+		    this.name = name || 'Tom';
+		}
+		
+		// Test Code
+		var cat = new Cat();
+		console.log(cat.name);
+		console.log(cat.sleep());
+		console.log(cat instanceof Animal); // false
+		console.log(cat instanceof Cat); // true
+		
+		
+	</script>
+</html>

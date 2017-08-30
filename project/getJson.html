@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" >
+		$.getJSON("http://t.v.gaodun.com/Json/islogin?callback=?",function(data,status,xhr){
+			console.log(data);
+			console.log(status);
+		})
+		$.ajax({
+		  url: "http://t.v.gaodun.com/Json/islogin?callback=?",
+		  dataType:"json",
+		  success:function(res){
+		  	console.log(res)
+		  },
+		  error:function(data){
+		  	console.log(data);
+		  }
+		});
+	</script>
+</html>

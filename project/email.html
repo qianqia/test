@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<input type="text"  id="ipt"  />
+	</body>
+	<script type="text/javascript" src="jquery-3.2.1.js"></script>
+	<script type="text/javascript">
+		//正则匹配邮箱
+		var reg=/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+		var regA=/^w+([-+.]w+)*@w+([-.]w+)*.w+([-.]w+)*$/
+//		document.getElementById("ipt").onblur=function(){
+//			console.log(value);
+//			console.log(reg.test(value));
+//		}
+		$("#ipt").on("blur",function(){
+			console.log($(this).val());
+			console.log(reg.test($(this).val()));
+		})
+		
+	</script>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript" src="jquery-3.2.1.js"></script>
+	<script type="text/javascript">
+		//第一种
+		$.ajax({
+			type:"get",
+			url:"http://api.dev.gilieye.com/activities/1",
+			async:true
+		}).then(function(res){
+			console.log(res);
+		}).catch(function(){
+			console.log("获取数据失败");
+		});
+		//第二种
+		$.ajax({
+			type:"get",
+			url:"http://api.dev.gilieye.com/activities/1",
+			async:true
+		}).then(function(res){
+			console.log(res);
+		},function(){
+			console.log("获取数据失败");
+		});
+		
+	</script>
+</html>

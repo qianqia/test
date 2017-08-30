@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			.box{
+				overflow: hidden;
+			}
+			.boxLeft{
+				float: left;
+			}
+			.boxRight{
+				float: left;
+				position: relative;
+				width: 200px;
+			}
+			.boxRight input{
+				display: block;
+				width: 150px;
+			}
+			.add{
+				position: absolute;
+				width: 20px;
+				height: 20px;
+				overflow: hidden;
+				right: 0;
+				top: 0;
+				background: #ff0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<div class="boxLeft">药品分类</div>
+			<div class="boxRight">
+				<div class="add">+</div>
+				<input type="text" name="" id="" value="" />
+				
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="jquery-3.2.1.js"></script>
+	<script type="text/javascript">
+		var num=0;
+		$(".add").on("click",function(){
+			num++
+			if(num<3){
+				var inner='<input type="text"  />';
+				$(".boxRight").append(inner);
+			}
+			
+		})
+	</script>
+</html>
